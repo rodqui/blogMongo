@@ -1,0 +1,21 @@
+<%- include("partials/header"); -%>
+<h1>Que tal tu dia?</h1>
+<h2><%= date %></h2>
+<form action="/compose"  method="post">
+    <div class="mb-3">
+        <label for="postTitle" class="form-label">Tu nombre</label>
+        <input type="text" class="form-control" id="postAutor" name="postAutor" placeholder="Ejm: Elon Musk" required>
+    </div>
+    <div class="mb-3">
+        <label for="postTitle" class="form-label">Titulo</label>
+        <input type="text" class="form-control" id="postTitle" name="postTitle" placeholder="Ejm: Una vida sin ti desde hoy" required>
+    </div>
+    <div class="mb-3">
+        <label for="postText" class="form-label">Que tal?</label>
+        <textarea class="form-control" id="postText" name="postText" rows="3" required></textarea>
+    </div>
+    <input type="hidden" name="date" value="<%= date %>">
+    <div class="mb-3"><button class="btn btn-primary mb-3" type="submit">Publicar</button></div>
+</form>
+
+<%- include("partials/footer"); -%>

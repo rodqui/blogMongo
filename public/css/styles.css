@@ -1,0 +1,63 @@
+.container-fluid {
+    padding-top: 70px;
+    padding-bottom: 70px;
+}
+.navbar {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border: 0;
+    border-radius: 0;
+    margin-bottom: 0;
+    font-size: 12px;
+    letter-spacing: 5px;
+    color: #000;
+}
+.navbar li a:hover {
+    color: #740000 !important;
+   
+}
+.nav-link{
+    color: #000;
+}
+
+.footer-padding {
+	padding-bottom: 60px;
+}
+
+.footer {
+	position: fixed;
+	text-align: center;
+    bottom: 0;
+	width: 100%;
+	height: auto;
+	background-color: #1abc9c;
+}
+
+.footer p {
+	margin-top: 25px;
+	font-size: 12px;
+  color: #fff;
+}
+
+
+.little{
+    font-size: 0.7rem;
+    color: #000000;
+}
+.box{
+    border-bottom: 1px solid #ccc;
+
+}
+
+a{
+    text-decoration: none;
+    color: #810081a1;
+}
+
+.publish{
+    background-color: #1abc9c;
+}
+
+.formatText{
+    white-space: pre-line;
+}
