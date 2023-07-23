@@ -1,9 +1,13 @@
 
 const express = require("express");
+const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
 const lodash = require("lodash");
 const port =  process.env.PORT || 3000;
+
+
+
 
 const homeStartingContent = "";
 const aboutContent = "Mi diario es un espacio digital diseñado para que los usuarios puedan escribir, organizar y compartir sus pensamientos, experiencias y reflexiones de manera privada. Este tipo de sitio web ofrece un entorno seguro y personalizado donde los usuarios pueden registrar y mantener un registro íntimo de sus vivencias, metas, emociones y cualquier otro aspecto relevante de sus vidas.";
@@ -17,13 +21,40 @@ const posts = [];
 //day
 const day = getDay();
 
+//conection DB
+const uri = "mongodb://127.0.0.1:27017/blogMongo";
+mongoose.connect(uri, {useNewUrlParser: true});
+
+//Create a new Schema
+const postSchema = {
+  autor: String,
+  title: String,
+  content: String,
+  date: String
+}
+
+//Create a new model for Schema
+const Post = new mongoose.model("Post", postSchema);
+
 app.set('view engine', 'ejs');
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 
 app.get("/", (req, res)=>{
-  res.render("home", {homeContent: homeStartingContent, postsPublished: posts});
+
+  //query to bd
+  async function getPosts(){
+    const result = await Post.find();
+    return result;
+  }
+
+  getPosts().then(function(foundPosts){
+    console.log(foundPosts);
+    res.render("home", {homeContent: homeStartingContent, postsPublished: foundPosts});
+  })
+
+ 
 });
 
 app.get("/about", (req, res)=>{
@@ -41,32 +72,38 @@ app.get("/compose", (req, res)=>{
 
 app.post("/compose", (req, res)=>{
 
-  
-  const post = {
+
+  //create new post
+  const post = new Post({
+    autor: req.body.postAutor,
     title: req.body.postTitle,
-    body: req.body.postText,
-    date: req.body.date,
-    autor: req.body.postAutor
-  }
+    content: req.body.postText,
+    date: req.body.date
+  });
 
-  posts.push(post);
+  //Save post
+  post.save();
 
+
+  //posts.push(post);
   res.redirect("/");
   console.log(posts);
 });
 
 
-app.get("/posts/:postName", (req, res)=>{
+app.get("/posts/:postId", (req, res)=>{
 
-  posts.forEach(function(post){
-    if(lodash.lowerCase(post.title)===lodash.lowerCase(req.params.postName)){
-      console.log("Match Found!");
-      console.log(post.title);
-      console.log(post.body);
-      res.render("post",{postTitle: post.title, postBody: post.body, postAutor: post.autor, postDate: post.date});
-      
+
+
+  const identifierPost = req.params.postId;
+  Post.findOne({_id: identifierPost}).then(function (result){
+    if(!result){//si no hay resultados
+      console.log("Data not found!");
+    }else{
+      res.render("post",{postTitle: result.title, postBody: result.content, postAutor: result.autor, postDate: result.date});
     }
-  });
+  })
+
 
 
 });

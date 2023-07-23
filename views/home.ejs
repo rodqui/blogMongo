@@ -5,21 +5,22 @@
 <% postsPublished.forEach(function(post){ %>
     <% let urlTitle = post.title.toLowerCase(); %>
     <% let urlTitleReplaced = urlTitle.replace(/ /g, '-'); %>
+    <% let postId = post._id; %>
 
 <div class="box">
-    <h2><a href="/posts/<%= urlTitleReplaced %>"><%= post.title %></a></h2>
+    <h2><a href="/posts/<%= postId %>"><%= post.title %></a></h2>
     <span class="little"> - <%= post.date %></span><span class="little"> - Por <%= post.autor %> -</span>
 
-    <% let bodyLength = post.body.length; %>
+    <% let bodyLength = post.content.length; %>
 
     <% if(bodyLength>=100){ %>
-        <% let bodyWith10Characters = post.body.slice(0, 100); %>
+        <% let bodyWith10Characters = post.content.slice(0, 100); %>
         <p><%= bodyWith10Characters + "..." %></p>
-        <p><a href="/posts/<%= urlTitleReplaced %>">Leer mas</a></p>
+        <p><a href="/posts/<%= postId %>">Leer mas</a></p>
     <% }else{ %>
         
-        <p><%= post.body %></p>
-        <p><a href="/posts/<%= urlTitleReplaced %>"> Leer mas</a></p>
+        <p><%= post.content %></p>
+        <p><a href="/posts/<%= postId %>"> Leer mas</a></p>
     <% } %>
    
     
