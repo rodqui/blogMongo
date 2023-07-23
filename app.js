@@ -22,7 +22,8 @@ const posts = [];
 const day = getDay();
 
 //conection DB
-const uri = "mongodb://127.0.0.1:27017/blogMongo";
+//const uri = "mongodb://127.0.0.1:27017/blogMongo";
+const uri = "mongodb+srv://test:labolita123@cluster0.glhjx3l.mongodb.net/blogMongo";
 mongoose.connect(uri, {useNewUrlParser: true});
 
 //Create a new Schema
