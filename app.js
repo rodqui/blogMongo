@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
 const lodash = require("lodash");
-const port =  process.env.PORT || 3000;
+const port =  3000;
 
 
 
